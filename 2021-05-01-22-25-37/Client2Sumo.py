@@ -28,7 +28,7 @@ def flatten_list(_2d_list):
 #traci.start(sumoCmd)
 
 #---Server-Client Architecture---
-traci.init(port=8813, host="localhost") #host = ip address of sumo server
+traci.init(port=8813, host="192.168.0.151") #host = ip address of sumo server
 traci.setOrder(2)
 
 
