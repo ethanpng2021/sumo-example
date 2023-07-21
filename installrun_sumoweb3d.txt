@@ -1,0 +1,67 @@
+Log in as root user
+
+apt-get install git cmake python3 g++ libxerces-c-dev libfox-1.6-dev libgdal-dev libproj-dev libgl2ps-dev python3-dev swig default-jdk maven libeigen3-dev
+
+wget https://sourceforge.net/projects/sumo/files/sumo/version%200.32.0/sumo-src-0.32.0.tar.gz
+
+tar -xvf sumo-src-0.32.0.tar.gz
+
+export SUMO_HOME="/home/sumo-0.32.0"
+
+cd sumo-0.32.0
+
+./configure
+
+make
+
+make install  
+
+cd /home
+
+wget https://files.pythonhosted.org/packages/84/16/d2af40f50cce28c729c46b53ba5ad6c021127fcd88c46c12d44b32e82a3c/sumo-web3d-1.0.1.tar.gz
+
+tar -xvf sumo-web3d-1.0.1.tar.gz
+
+cd sumo-web3d-1.0.1
+
+nano setup.py
+
+CHANGE THE FOLLOWING PARTS
+
+package_data={
+        'static': 'sumo_web3d/static/*',
+        'scenarios': 'sumo_web3d/scenarios/*',
+        'scenarios.json': 'sumo_web3d/scenarios.json'
+    },
+
+......
+
+install_requires=[
+        'aiohttp>=2.2',
+        'chardet>=3.0',
+        'lxml>=3.8',
+        'websockets>=3.4',
+        'xmltodict>=0.11',
+    ],
+
+TO
+
+package_data={
+        'static': ['sumo_web3d/static/*'],
+        'scenarios': ['sumo_web3d/scenarios/*'],
+        'scenarios.json': ['sumo_web3d/scenarios.json']
+    },
+
+......
+
+install_requires=[
+        'aiohttp>=2.2, <4.0',
+        'chardet>=3.0',
+        'lxml>=3.8',
+        'websockets>=3.4',
+        'xmltodict>=0.11',
+    ],
+
+
+Finally, on bash terminal, type and run: 
+sumo-web3d
