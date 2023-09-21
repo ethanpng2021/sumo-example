@@ -62,6 +62,8 @@ install_requires=[
         'xmltodict>=0.11',
     ],
 
+Install:
+python setup.py install
 
-Finally, on bash terminal, type and run: 
+Finally, on bash terminal, run: 
 sumo-web3d
