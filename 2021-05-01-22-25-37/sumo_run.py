@@ -140,13 +140,36 @@ while traci.simulation.getMinExpectedNumber() > 0:
 
                 #***SET FUNCTION FOR TRAFFIC LIGHTS***
                 #REF: https://sumo.dlr.de/docs/TraCI/Change_Traffic_Lights_State.html
-                trafficlightduration = [5,37,5,35,6,3]
+
+                ## --------------------- Real-World TL Info --------------------
+
+                ### Green (20-60s): depends on traffic volume
+                ### Yellow (3-5s): standard for driver reaction
+                ### Pedestrian phase (20-30s): if applicable
+                ### Red is automatically implied when the other direction is green
+                ### SUMO cycles between phases in order, so correct sequencing is key
+
+                ### You are modeling:
+                ### Main road (phases 0 & 1)
+                ### Side road (phases 2 & 3)
+                ### Pedestrian or turn (phases 4 & 5)
+
+                ### trafficsignal = [
+                ###        "rrrrrrGGGGgGGGrr",  # Green phase for a main direction (Phase 0 - duration 30s)
+                ###        "yyyyyyyyrrrrrrrr",  # Yellow phase for main direction (Phase 1 - duration 4s)
+                ###        "rrrrrGGGGGGrrrrr",  # Green phase for a side direction (Phase 2 - duration 25s)
+                ###        "rrrrryyyyyyrrrrr",  # Yellow phase for side direction (Phase 3 - duration 4s)
+                ###        "GrrrrrrrrrrGGGGg",  # Pedestrian or turn green (Phase 4 - duration 20s)
+                ###        "yrrrrrrrrrryyyyy",  # Pedestrian or turn yellow (Phase 5 - duration 4s)
+                ### ]
+
+                ##-----------------------------------------------
+                trafficlightduration = [30,4,25,4,20,4]
                 trafficsignal = ["rrrrrrGGGGgGGGrr", "yyyyyyyyrrrrrrrr", "rrrrrGGGGGGrrrrr", "rrrrryyyyyyrrrrr", "GrrrrrrrrrrGGGGg", "yrrrrrrrrrryyyyy"]
                 tfl = "cluster_4260917315_5146794610_5146796923_5146796930_5704674780_5704674783_5704674784_5704674787_6589790747_8370171128_8370171143_8427766841_8427766842_8427766845"
                 traci.trafficlight.setPhaseDuration(tfl, trafficlightduration[randrange(6)])
                 traci.trafficlight.setRedYellowGreenState(tfl, trafficsignal[randrange(6)])
-
-                ##------------------------------------------------------##
+                ##------------------------------------------------------
 
 
 traci.close()
